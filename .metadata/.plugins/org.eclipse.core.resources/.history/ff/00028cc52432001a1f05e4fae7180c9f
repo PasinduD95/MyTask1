@@ -1,0 +1,18 @@
+package hello;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
+public class StdDao {
+
+	JdbcTemplate template;
+	
+	public void setTemplate(jdbcTemplate template) {
+		this.template = template;
+	}
+	
+	public int save(Std s) {
+		String sql = "insert into mydb(stdId, stdName, age, gender, dob) values('"+s.getStdId()+"', "+s.getStdName()+", '"+s.getAge()+"', "+s.getGender()+",'"+s.getDob()+"')";
+		return template.update(sql);
+	}
+	
+}

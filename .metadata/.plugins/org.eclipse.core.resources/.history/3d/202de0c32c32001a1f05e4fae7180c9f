@@ -1,0 +1,53 @@
+package hello;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+public class StdDao {
+
+	JdbcTemplate template;
+	
+	public void setTemplate(jdbcTemplate template) {
+		this.template = template;
+	}
+	
+	public int save(Std s) {
+		String sql = "insert into mydb(stdId, stdName, age, gender, dob) values('"+s.getStdId()+"', "+s.getStdName()+", '"+s.getAge()+"', "+s.getGender()+",'"+s.getDob()+"')";
+		return template.update(sql);
+	}
+	
+	public int update(Std s){    
+	    String sql="update mydb set stdId='"+s.getStdId()+"', stdName="+s.getStdName()+", age='"+s.getAge()+"', gender="+s.getGender()+", dob='"+s.getDob()+"' where StdId="+s.getStdId()+"";
+	    return template.update(sql);
+	}
+	
+	public int delete(String stdId) {
+		String sql = "delete from mydb where stdId="+stdId+"";    
+	    return template.update(sql);
+	}
+	
+	public Std getStudentById(String stdId){    
+	    String sql="select * from mydb where stdId=?";    
+	    return template.queryForObject(sql, new Object[]{stdId},new BeanPropertyRowMapper<Std>(Std.class));    
+	} 
+	
+	public List<Std> getStudents(){    
+	    return template.query("select * from mydb",new RowMapper<Std>(){    
+	        public Std mapRow(ResultSet rs, int row) throws SQLException {    
+	            Std std = new Std();    
+	            std.setStdId(rs.getString(1));    
+	            std.setStdName(rs.getString(2));    
+	            std.setAge(rs.getInt(3));    
+	            std.setGender(rs.getChar(4));    
+	            std.setDob(rs.getDate(5));    
+
+	            return std;    
+	        }    
+	    });    
+	}   
+
+}

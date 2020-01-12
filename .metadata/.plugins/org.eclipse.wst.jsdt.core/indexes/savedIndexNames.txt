@@ -1,0 +1,4 @@
+INDEX VERSION 1.4+D:\CEB_Project\Workspace\MyTask1\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+87060812.index
+2562845019.index
+1500549298.index
